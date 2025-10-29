@@ -1,2 +1,5 @@
 venv/
 *.gguf
+chroma_db_persist/
+__pycache__/
+*.db
