@@ -4,6 +4,9 @@ from fastapi.responses import FileResponse
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import Optional
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 # --- Importaciones de LangChain (RAG) ---
 from langchain.vectorstores import Chroma
@@ -72,8 +75,22 @@ def initialize_vector_db(llm_instance: Llama):
 # --- Inicialización de la API FastAPI ---
 
 app = FastAPI(title="PisacGuide API")
-# Montar la carpeta 'static' para servir HTML/CSS/JS
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permite CUALQUIER origen
+    allow_credentials=True,
+    allow_methods=["*"],  # Permite TODOS los métodos (POST, GET)
+    allow_headers=["*"],  # Permite CUALQUIER cabecera
+)
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Servir el index.html en la raíz
+@app.get("/")
+async def read_index():
+    return FileResponse("static/index.html")
+# --- FIN DEL NUEVO CÓDIGO ---
 
 @app.on_event("startup")
 def on_startup():
