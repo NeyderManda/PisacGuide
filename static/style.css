@@ -1,4 +1,4 @@
-/* --- style.css: Diseño Profesional para Festacom --- */
+/* --- style.css: Diseño Profesional Corregido --- */
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -9,33 +9,32 @@ body {
     height: 100vh;
 
     /* --- FONDO ÉPICO --- */
-    /* El truco del ../ asegura que busque en la carpeta correcta */
+    /* Asegúrate de que la imagen se llame pisac_bg.jpg */
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/static/pisac_bg.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    background-color: #333; /* Color de respaldo si la imagen falla */
+    background-color: #333; /* Respaldo */
 }
 
 #chat-container {
     width: 100%;
     max-width: 500px;
-    height: 85vh; /* Ocupa el 85% de la altura de la pantalla */
+    height: 85vh;
     display: flex;
     flex-direction: column;
     
-    /* Efecto Vidrio (Glassmorphism) */
+    /* Efecto Vidrio */
     background: rgba(255, 255, 255, 0.90);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-radius: 20px;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    overflow: hidden; /* Para que nada se salga de los bordes redondeados */
+    overflow: hidden;
 }
 
 #chat-header {
-    /* Gradiente Andino */
     background: linear-gradient(135deg, #ce1126, #fcd116, #00782b);
     color: white;
     padding: 15px;
@@ -47,60 +46,62 @@ body {
 #chat-header h2 { margin: 0; font-size: 1.3rem; font-weight: 700; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
 #chat-header span { font-size: 0.85rem; opacity: 0.95; }
 
-/* --- ZONA DE MENSAJES (CRÍTICO PARA ALINEACIÓN) --- */
+/* --- ZONA DE MENSAJES --- */
 #chat-messages {
-    flex-grow: 1; /* Ocupa todo el espacio disponible */
-    overflow-y: auto; /* Permite scroll */
+    flex-grow: 1;
+    overflow-y: auto;
     padding: 20px;
     
-    /* Flexbox Vertical */
+    /* Flexbox Vertical: ESTO ES LO QUE PERMITE LA ALINEACIÓN */
     display: flex;
     flex-direction: column; 
-    gap: 12px; /* Espacio entre burbujas */
+    gap: 12px; /* Espacio entre mensajes */
 }
 
 /* Estilo Base de Burbuja */
 .message {
     padding: 12px 16px;
     border-radius: 18px;
-    max-width: 80%; /* Máximo ancho de la burbuja */
+    max-width: 80%; /* No deja que el mensaje ocupe todo el ancho */
     width: fit-content; /* El ancho se ajusta al texto */
     line-height: 1.4;
     font-size: 0.95rem;
-    word-wrap: break-word; /* Rompe palabras largas si es necesario */
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    word-wrap: break-word;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-/* --- ALINEACIÓN DERECHA (USUARIO) --- */
+/* --- USUARIO: DERECHA Y VERDE --- */
 .message.user {
-    align-self: flex-end; /* Mueve la caja a la derecha */
+    align-self: flex-end; /* Fuerza a la derecha */
     background-color: #25D366; /* Verde WhatsApp */
     color: white;
-    border-bottom-right-radius: 4px; /* Esquina "picuda" */
-    text-align: left; /* El texto dentro sigue alineado a la izquierda para leer mejor */
+    border-bottom-right-radius: 4px;
+    text-align: left;
+    margin-left: auto; /* Refuerzo para alineación derecha */
 }
 
-/* --- ALINEACIÓN IZQUIERDA (BOT) --- */
+/* --- BOT: IZQUIERDA Y BLANCO --- */
 .message.bot {
-    align-self: flex-start; /* Mueve la caja a la izquierda */
-    background-color: #f3f4f6; /* Gris claro */
-    color: #1f2937;
-    border-bottom-left-radius: 4px; /* Esquina "picuda" */
+    align-self: flex-start; /* Fuerza a la izquierda */
+    background-color: #ffffff; /* Blanco puro */
+    color: #333; /* Texto oscuro */
+    border-bottom-left-radius: 4px;
     border: 1px solid #e5e7eb;
+    margin-right: auto; /* Refuerzo para alineación izquierda */
 }
 
 /* Estilo para Errores */
 .message.bot-error {
-    align-self: center; /* Centrado */
+    align-self: center;
     background-color: #fee2e2;
     color: #b91c1c;
     border: 1px solid #fca5a5;
     text-align: center;
 }
 
-/* Animación de carga (los puntitos) */
+/* Animación de carga */
 .message.loading {
-    background-color: #f3f4f6;
+    background-color: #ffffff;
     align-self: flex-start;
     border-bottom-left-radius: 4px;
 }
@@ -148,7 +149,7 @@ body {
     transform: scale(0.95);
 }
 
-/* Scrollbar bonito y discreto */
+/* Scrollbar bonito */
 #chat-messages::-webkit-scrollbar {
     width: 6px;
 }
