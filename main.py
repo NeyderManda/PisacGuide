@@ -124,42 +124,45 @@ class QueryResponse(BaseModel):
 @app.post("/chat", response_model=QueryResponse)
 def handle_chat(query: QueryRequest):
     """
-    Maneja una pregunta del usuario.
-    1. Busca contexto en ChromaDB.
-    2. Construye un prompt.
-    3. Genera una respuesta con el LLM.
+    Maneja una pregunta del usuario siguiendo el flujo RAG.
     """
     global llm_model, vector_db
     
+    if llm_model is None or vector_db is None:
+        return QueryResponse(answer="Error: El sistema se está iniciando, intenta en unos segundos.", source_context="Error")
+
     print(f"Recibida pregunta: {query.question}")
     
-    # 1. Recuperar (Retrieve) - Usamos .invoke() (lo que aprendimos ayer)
-    retriever = vector_db.as_retriever(search_kwargs={"k": 2}) # k=2 chunks
+    # 1. Recuperar (Retrieve)
+    retriever = vector_db.as_retriever(search_kwargs={"k": 2})
     context_docs = retriever.invoke(query.question)
     context_str = "\n\n".join([doc.page_content for doc in context_docs])
     
-    # 2. Aumentar (Augment) - Creamos el prompt
+    # 2. Aumentar (Augment) - ¡AQUÍ ESTÁ LA NUEVA PERSONALIDAD!
+    # Le damos un rol (Role Prompting) para que actúe como guía.
     prompt_template = f"""
-    Instrucciones: Eres 'PisacGuide', un guía turístico experto, amable y orgulloso de la cultura de Pisac y Cusco.
-    - Responde siempre en español.
-    - Usa un tono cordial y acogedor.
-    - Basa tu respuesta ÚNICAMENTE en el siguiente contexto.
-    - Si la respuesta no está en el contexto, di amablemente que no tienes esa información y sugiere preguntar a un guía local.
-    
-    Contexto:
+    Instrucciones: Eres 'PisacGuide', un guía turístico oficial del Parque Arqueológico de Pisac.
+    - Tu tono es amable, acogedor y profesional.
+    - Responde SIEMPRE en español.
+    - Si la pregunta es sobre saludos o cortesía, responde amablemente.
+    - Basa tus respuestas factuales ÚNICAMENTE en el siguiente contexto proporcionado.
+    - Si la respuesta no está en el contexto, di: "Lo siento, como guía virtual aún no tengo esa información específica, pero puedo ayudarte con horarios y rutas principales."
+    - Usa frases cortas y claras, ideales para leer en un celular.
+
+    Contexto del Parque:
     {context_str}
     
-    Pregunta:
+    Pregunta del Turista:
     {query.question}
     
-    Respuesta (basada únicamente en el contexto):
+    Respuesta de PisacGuide:
     """
     
-    # 3. Generar (Generate) - Usamos el modelo cargado en memoria
+    # 3. Generar (Generate)
     output = llm_model(
         prompt_template,
-        max_tokens=250,
-        stop=["Pregunta:"],
+        max_tokens=300, # Aumentamos un poco para que pueda explayarse si es necesario
+        stop=["Pregunta del Turista:", "Instrucciones:"],
         echo=False
     )
     
