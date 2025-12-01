@@ -1,4 +1,4 @@
-/* --- style.css: Diseño Profesional Corregido --- */
+/* --- style.css: Diseño Profesional FINAL (v2) --- */
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -8,13 +8,12 @@ body {
     align-items: center;
     height: 100vh;
 
-    /* --- FONDO ÉPICO --- */
-    /* Asegúrate de que la imagen se llame pisac_bg.jpg */
+    /* FONDO */
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/static/pisac_bg.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    background-color: #333; /* Respaldo */
+    background-color: #333;
 }
 
 #chat-container {
@@ -23,8 +22,6 @@ body {
     height: 85vh;
     display: flex;
     flex-direction: column;
-    
-    /* Efecto Vidrio */
     background: rgba(255, 255, 255, 0.90);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -46,51 +43,47 @@ body {
 #chat-header h2 { margin: 0; font-size: 1.3rem; font-weight: 700; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
 #chat-header span { font-size: 0.85rem; opacity: 0.95; }
 
-/* --- ZONA DE MENSAJES --- */
+/* ZONA DE MENSAJES */
 #chat-messages {
     flex-grow: 1;
     overflow-y: auto;
     padding: 20px;
-    
-    /* Flexbox Vertical: ESTO ES LO QUE PERMITE LA ALINEACIÓN */
     display: flex;
-    flex-direction: column; 
-    gap: 12px; /* Espacio entre mensajes */
+    flex-direction: column; /* CRÍTICO */
+    gap: 12px;
 }
 
-/* Estilo Base de Burbuja */
 .message {
     padding: 12px 16px;
     border-radius: 18px;
-    max-width: 80%; /* No deja que el mensaje ocupe todo el ancho */
-    width: fit-content; /* El ancho se ajusta al texto */
+    max-width: 80%;
+    width: fit-content;
     line-height: 1.4;
     font-size: 0.95rem;
     word-wrap: break-word;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
-/* --- USUARIO: DERECHA Y VERDE --- */
+/* USUARIO (DERECHA - VERDE) */
 .message.user {
-    align-self: flex-end; /* Fuerza a la derecha */
-    background-color: #25D366; /* Verde WhatsApp */
+    align-self: flex-end; /* CRÍTICO */
+    margin-left: auto;    /* CRÍTICO (Refuerzo) */
+    background-color: #25D366;
     color: white;
     border-bottom-right-radius: 4px;
     text-align: left;
-    margin-left: auto; /* Refuerzo para alineación derecha */
 }
 
-/* --- BOT: IZQUIERDA Y BLANCO --- */
+/* BOT (IZQUIERDA - BLANCO) */
 .message.bot {
-    align-self: flex-start; /* Fuerza a la izquierda */
-    background-color: #ffffff; /* Blanco puro */
-    color: #333; /* Texto oscuro */
+    align-self: flex-start; /* CRÍTICO */
+    margin-right: auto;     /* CRÍTICO (Refuerzo) */
+    background-color: #ffffff;
+    color: #333;
     border-bottom-left-radius: 4px;
     border: 1px solid #e5e7eb;
-    margin-right: auto; /* Refuerzo para alineación izquierda */
 }
 
-/* Estilo para Errores */
 .message.bot-error {
     align-self: center;
     background-color: #fee2e2;
@@ -99,14 +92,7 @@ body {
     text-align: center;
 }
 
-/* Animación de carga */
-.message.loading {
-    background-color: #ffffff;
-    align-self: flex-start;
-    border-bottom-left-radius: 4px;
-}
-
-/* --- ZONA DE INPUT --- */
+/* INPUT */
 #chat-input-container {
     display: flex;
     padding: 15px;
@@ -121,7 +107,6 @@ body {
     padding: 12px 20px;
     font-size: 1rem;
     outline: none;
-    transition: all 0.2s;
 }
 
 #chat-input:focus {
@@ -141,22 +126,4 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: transform 0.1s;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-#send-button:active {
-    transform: scale(0.95);
-}
-
-/* Scrollbar bonito */
-#chat-messages::-webkit-scrollbar {
-    width: 6px;
-}
-#chat-messages::-webkit-scrollbar-track {
-    background: transparent;
-}
-#chat-messages::-webkit-scrollbar-thumb {
-    background-color: rgba(0,0,0,0.2);
-    border-radius: 10px;
 }
