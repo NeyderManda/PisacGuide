@@ -1,9 +1,11 @@
-static: styles.css:::
-
 
 body {
     font-family: Arial, sans-serif; 
-	background-color: #f0f2f5;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/static/pisac_bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: #333;
 	display: flex;
 	justify-content: center;
 	align-items: center;
